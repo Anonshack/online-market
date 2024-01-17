@@ -1,0 +1,151 @@
+  {% extends 'base.html' %}
+  {% load static %}
+  {% block content %}
+
+  <section class="section-content padding-y bg">
+    <div class="container">
+
+      <!-- ============================ COMPONENT 1 ================================= -->
+      <div class="card">
+        <div class="row no-gutters">
+          <aside class="col-md-6">
+            <article class="gallery-wrap">
+              <div class="img-big-wrap">
+                <a href="#"><img src="{{product.image.url}}"></a>
+              </div> <!-- img-big-wrap.// -->
+
+            </article> <!-- gallery-wrap .end// -->
+          </aside>
+          <main class="col-md-6 border-left">
+            <article class="content-body">
+
+              <h2 class="title">{{product.name}}</h2>
+
+              <div class="mb-3">
+                <var class="price h4">{{product.price}} sum</var>
+              </div>
+
+              <p>{{product.description}}</p>
+
+
+
+              <hr>
+              <div class="row">
+                <div class="item-option-select">
+                  <h6>Choose Color</h6>
+                  <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-light">
+                      <input type="radio" name="radio_color"> Silver
+                    </label>
+                    <label class="btn btn-light">
+                      <input type="radio" name="radio_color"> Gray
+                    </label>
+                    <label class="btn btn-light active">
+                      <input type="radio" name="radio_color checked"> Gold
+                    </label>
+                    <label class="btn btn-light">
+                      <input type="radio" name="radio_color"> Black
+                    </label>
+                  </div>
+                </div>
+              </div>
+   
+              <div class="row">
+                <div class="item-option-select">
+                  <!-- <h6>Select Size</h6> -->
+                  <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                    <!-- <label class="btn btn-light"> -->
+                      <!-- <input type="radio" name="radio_color"> S -->
+                    </label>
+                    <!-- <label class="btn btn-light active"> -->
+                      <!-- <input type="radio" name="radio_color" checked> M -->
+                    </label>
+                    <!-- <label class="btn btn-light"> -->
+                      <!-- <input type="radio" name="radio_color"> L -->
+                    </label>
+                    <!-- <label class="btn btn-light"> -->
+                      <!-- <input type="radio" name="radio_color"> XL -->
+                    </label>
+                  </div>
+                </div>
+              </div> <!-- row.// -->
+              <hr>
+              {% if product.stock > 0 %}
+
+              {% if cart_in %}
+              <a href="#" class="btn btn-success">
+                <span class="text">Added to </span>
+                <i class="fa fa-check"></i>
+              </a>
+              <a href="{% url 'cart' %}" class="btn btn-outline-success">
+                <span class="text">View cart</span>
+                <i class="fa fa-eye"></i>
+              </a>
+              {% else %}
+              <a href="{% url 'cart_add' product.id %}" class="btn  btn-primary">
+                <span class="text">Add to cart </span>
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+              {% endif %}
+              {% else %}
+              <h5 class="text-danger">Out of stock</h5>
+              {% endif %}
+
+            </article> <!-- product-info-aside .// -->
+          </main> <!-- col.// -->
+        </div> <!-- row.// -->
+      </div> <!-- card.// -->
+      <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+      <br>
+
+      <div class="row">
+        <div class="col-md-9">
+
+          <header class="section-heading">
+            <h3>Customer Reviews </h3>
+        
+            {% for comment in comments %}
+              <article class="box mb-3">
+            <div class="icontext w-100">
+              <!-- <img src="" class="img-xs icon rounded-circle"> -->
+              <div class="text">
+                <span class="date text-muted float-md-right">{{ comment.created_at }}</span>
+                <h6 class="mb-1">{{ comment.user }}</h6>
+
+              </div>
+            </div> <!-- icontext.// -->
+            <div class="mt-3">
+              <p>{{ comment.text }}</p>
+            </div>
+
+
+          </article>
+          {% endfor %}
+
+
+        </div> <!-- col.// -->
+      </div> <!-- row.// -->
+      <form class="comment" method="post">
+        <div class="input-group w-100">
+          {% csrf_token %}
+            <input type="text" class="form-control" style="width:60%;" placeholder="Enter your comment" name="text">
+            <div class="input-group-append">
+              {% if request.user.is_authenticated %}
+                <button type="submit" class="form-control btn btn-success">Send</button>
+              {% else %}
+                <a href="{% url 'register' %}"><button type="submit" class="form-control btn btn-success">Register</button></a>
+              {% endif %}
+
+            </div>
+        </div>
+    </form>
+
+
+    </div> <!-- container .//  -->
+  </section>
+
+  {% endblock %}
+
+
+

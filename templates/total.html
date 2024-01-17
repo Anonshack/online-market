@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if request.user.is_staff %}
+<!-- {% if user.is_superuser %} -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Product number</th>
+            <th scope="col">Products price</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for cart_item in cart_items %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>@{{request.user.username}}</td>
+            <td>{{cart_item.product.name}}</td>
+            <td>{{cart_item.quantity}}</td>
+            <td>{{cart_item.get_total_price}} sum</td>
+          
+        </tr>
+        {% endfor %}
+    
+
+            
+       
+    </tbody>
+</table>
+<!-- <h1 style="font-family: 'Rubik', sans-serif;">Common money: {{ total }}</h1> -->
+{% else %}
+<br>
+<div class="alert alert-primary text-center" role="alert">
+    <!-- We will contact you soon -->
+    <h2>We will contact you soon</h2>
+</div>
+
+<a href="{% url 'store' %}" type="button" class="btn btn-primary " style="margin-top: 12.7%; margin-top: 4%; margin-left: 3%;">Go back</a>
+{% endif %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

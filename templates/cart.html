@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        {% if not cart_items %}
+        <div class="alert alert-primary text-center" role="alert">
+            Your cart is empty
+        </div>
+
+        <a href="{% url 'store' %}" type="button" class="btn btn-primary " style="margin-top: 12.7%;">Go shopping</a>
+        {% else %}
+        <div class="row">
+            <aside class="col-lg-9">
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120">Quantity</th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" class="text-right" width="200"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for cart_item in cart_items %}
+                            <tr>
+                                <td>
+                                    <figure class="itemside align-items-center">
+                                        <div class="aside"><img src="{{cart_item.product.image.url}}" class="img-sm">
+                                        </div>
+                                        <figcaption class="info">
+                                            <a href="{{cart_item.product.get_url}}"
+                                                class="title text-dark">{{cart_item.product.name}}</a>
+                                            <p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+                                        </figcaption>
+                                    </figure>
+                                </td>           
+
+                                <td>
+                                    <!-- col.// -->
+                                    <div class="col">
+                                        <div class="input-group input-spinner">
+                                            <div class="input-group-prepend">
+                                                <a href="{% url 'cart_sub' cart_item.product.id %}"
+                                                    class="btn btn-light" type="button" id="button-plus"> <i
+                                                        class="fa fa-minus"></i> </a>
+                                            </div>
+                                            <input type="text" class="form-control" value="{{cart_item.quantity}}">
+                                            <div class="input-group-append">
+
+                                                <a href="{% url 'cart_add' cart_item.product.id %}"
+                                                    class="btn btn-light" type="button" id="button-minus">
+                                                    <i class="fa fa-plus"></i> </a>
+                                            </div>
+                                        </div> <!-- input-group.// -->
+                                    </div> <!-- col.// -->
+                                </td>
+                                <td>
+                                    <div class="price-wrap">
+                                        <var class="price">{{cart_item.get_total_price}} sum</var>
+                                        <small class="text-muted"> {{cart_item.product.price}} sum </small>
+                                    </div> <!-- price-wrap .// -->  
+                                </td>
+                                <td class="text-right">
+                                    <a href="{% url 'cart_remove' cart_item.product.id %}" class="btn btn-danger">
+                                        Remove</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div> <!-- card.// -->
+                
+            </aside> <!-- col.// -->
+            <aside class="col-lg-3">
+
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-right">{{total}} sum</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Tax:</dt>
+                            <dd class="text-right">{{tax}} sum</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-right text-dark b"><strong>{{gen_total}} sum</strong></dd>
+                        </dl>
+                        <hr>
+                  
+                        <a href="{% url 'total' %}" class="btn btn-primary btn-block">To order</a>
+                        <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+                    </div> <!-- card-body.// -->
+                </div> <!-- card.// -->
+
+            </aside> <!-- col.// -->
+        {% endif %}
+
+        </div> <!-- row.// -->
+
+
+    </div> <!-- container .//  -->
+</section>
+
+</body>
+
+</html>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="section-conten padding-y" style="min-height:84vh">
+
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+        <div class="card mx-auto" style="max-width: 480px; margin-top:100px;">
+          <div class="card-body">
+
+            
+          <h4 class="card-title mb-4">Add product</h4>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </form>
+        
+          </div> <!-- card-body.// -->
+        </div> <!-- card .// -->
+    
+         <br><br>
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+    
+    
+    </section>
+{% endblock %}

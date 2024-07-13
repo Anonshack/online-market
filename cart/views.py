@@ -60,6 +60,7 @@ def remove_cart_item(request, product_id):
     cart_item.delete()
     return redirect('cart')
 
+
 def sub_cart(request, product_id):
     cart = Cart.objects.get(session_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
@@ -70,6 +71,7 @@ def sub_cart(request, product_id):
     else:
         cart_item.delete()
     return redirect('cart')
+
 
 def error(request):
     return render(request, 'error.html')
